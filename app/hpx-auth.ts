@@ -42,7 +42,8 @@ async function sessionFromCookie(value: string | null): Promise<HpxUser | null> 
   if (!/^\d+$/.test(expires) || !signature || !Number.isSafeInteger(expiresAt) || expiresAt <= Math.floor(Date.now() / 1000)) return null;
   if (!safeEqual(await sign(expires, secret), signature)) return null;
   const email = env.HPX_OWNER_EMAIL?.trim() || "admin@hpx.local";
-  return { userId: `hpx-password-${signature.slice(0, 16)}`, displayName: "HPX Admin", email, fullName: "HPX Admin", authMethod: "password" };
+  const displayName = env.HPX_ADMIN_NAME?.trim() || "HPX Admin";
+  return { userId: `hpx-password-${signature.slice(0, 16)}`, displayName, email, fullName: displayName, authMethod: "password" };
 }
 
 export async function getHpxUser(request?: Request): Promise<HpxUser | null> {
