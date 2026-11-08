@@ -1,0 +1,23 @@
+.app-shell { position: relative; isolation: isolate; }
+.site-header, .dashboard { position: relative; z-index: 1; }
+.starfield { position: fixed; z-index: -1; inset: 0; overflow: hidden; pointer-events: none; background: #0a0d15; }
+.star-layer { position: absolute; inset: -80px; background-repeat: repeat; }
+.distant-stars {
+  opacity: .36;
+  background-size: 520px 420px;
+  background-image: radial-gradient(1px 1px at 38px 47px, #eef1f9 85%, transparent), radial-gradient(1px 1px at 140px 176px, #eef1f9 85%, transparent), radial-gradient(1px 1px at 264px 68px, #9eb5ff 85%, transparent), radial-gradient(1px 1px at 335px 304px, #eef1f9 85%, transparent), radial-gradient(1px 1px at 475px 137px, #eef1f9 85%, transparent), radial-gradient(1px 1px at 74px 345px, #9eb5ff 85%, transparent), radial-gradient(1px 1px at 421px 379px, #eef1f9 85%, transparent);
+  animation: stars-drift 100s ease-in-out infinite alternate;
+}
+.near-stars {
+  opacity: .58;
+  background-size: 760px 570px;
+  background-image: radial-gradient(1.6px 1.6px at 87px 96px, #eef1f9 80%, transparent), radial-gradient(1.5px 1.5px at 345px 210px, #789cff 80%, transparent), radial-gradient(1.3px 1.3px at 618px 67px, #eef1f9 80%, transparent), radial-gradient(1.6px 1.6px at 704px 431px, #eef1f9 80%, transparent), radial-gradient(1.3px 1.3px at 210px 488px, #eef1f9 80%, transparent);
+  animation: stars-twinkle 6s ease-in-out infinite alternate;
+}
+.shooting-star { position: absolute; left: var(--meteor-x); top: var(--meteor-y); height: 2px; width: var(--meteor-length); border-radius: 50%; background: linear-gradient(90deg, #eef1f9 0%, #7698ff 17%, #426aff65 55%, transparent 100%); opacity: 0; transform: rotate(-38deg); transform-origin: left center; animation: meteor-fall var(--meteor-duration) linear var(--meteor-delay) infinite; }
+.shooting-star::before { content: ""; position: absolute; left: 0; top: -1px; width: 4px; height: 4px; border-radius: 50%; background: #eef1f9; box-shadow: 0 0 9px #91adff; }
+@keyframes stars-drift { to { transform: translateY(80px); } }
+@keyframes stars-twinkle { from { opacity: .25; } to { opacity: .65; } }
+@keyframes meteor-fall { 0% { opacity: 0; transform: translate3d(0, 0, 0) rotate(-38deg); } 3% { opacity: .9; } 19% { opacity: 0; transform: translate3d(-52vw, 52vh, 0) rotate(-38deg); } 100% { opacity: 0; transform: translate3d(-52vw, 52vh, 0) rotate(-38deg); } }
+@media (max-width: 650px) { .shooting-star:nth-last-child(-n + 2) { display: none; } }
+@media (prefers-reduced-motion: reduce) { .shooting-star { display: none; } .star-layer { animation: none; transform: none; } }

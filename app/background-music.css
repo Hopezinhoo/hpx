@@ -1,0 +1,9 @@
+.music-toggle { position: relative; color: var(--muted); }
+.music-toggle.is-playing { color: #99b1ff; background: #1b2c46; border-color: #426aff; }
+.music-toggle.is-playing::after { content: ""; position: absolute; right: 5px; top: 5px; width: 4px; height: 4px; border-radius: 50%; background: #99b1ff; }
+.music-toggle[aria-busy="true"] { opacity: .7; }
+.music-credits { margin-top: 16px; }
+.music-credits ul { margin: 12px 0; padding-left: 18px; }
+.music-credits li { margin: 10px 0; }
+.music-credits li span { display: block; color: var(--muted); }
+.music-credits a { text-decoration: underline; text-underline-offset: 3px; }
