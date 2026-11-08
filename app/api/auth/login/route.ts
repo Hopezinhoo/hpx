@@ -12,7 +12,7 @@ export async function POST(request: Request) {
   const password = form.get("password");
   const returnTo = safeReturnTo(form.get("return_to"));
   if (typeof password !== "string" || !(await validatePassword(password))) return Response.redirect(new URL("/login?error=invalid", request.url), 303);
-  const response = Response.redirect(new URL(returnTo, request.url), 303);
+  const response = new Response(null, { status: 303, headers: { Location: new URL(returnTo, request.url).toString(), "Cache-Control": "no-store" } });
   response.headers.append("Set-Cookie", await createSessionCookie());
   return response;
 }
