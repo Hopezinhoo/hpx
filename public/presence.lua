@@ -1,7 +1,7 @@
 -- HPX Presence: load once at the beginning of the panel loader.
 -- Sends player identity and the current Roblox place. No Roblox cookie or password.
 -- Requires an HTTP request function supplied by the loader environment.
-local API_BASE = "https://hpx-ingest-7f2a.gracildaalves8.chatgpt.site"
+local API_BASE = "https://hpx.hopezinhoo.workers.dev"
 local Players = game:GetService("Players")
 local HttpService = game:GetService("HttpService")
 local MarketplaceService = game:GetService("MarketplaceService")
