@@ -1,13 +1,13 @@
 import { env } from "cloudflare:workers";
-import { getChatGPTUser } from "@/app/chatgpt-auth";
-import { isOwner } from "@/lib/access";
+import { getHpxUser } from "@/app/hpx-auth";
+import { isHpxOwner as isOwner } from "@/app/hpx-auth";
 import { json } from "@/lib/presence-http";
 import { boundedJson, bridgeCookie, openBridge, readBridgeCookie, sealBridge, summarizeSync, syncOrigin, upstream, type BridgeSession } from "@/lib/hpx-sync";
 
 export const dynamic = "force-dynamic";
 async function integrated(request:Request) {
   if(env.HPX_SYNC_URL)return null;
-  const user=await getChatGPTUser();
+  const user=await getHpxUser(request);
   if(!user)return json({error:"Entre na sua conta para continuar."},401);
   if(!isOwner(user,env.HPX_OWNER_EMAIL))return json({error:"Acesso restrito ao proprietário."},403);
   if(request.method!=="GET"&&request.headers.get("origin")!==new URL(request.url).origin)return json({error:"Origem não permitida."},403);
@@ -30,7 +30,7 @@ async function integrated(request:Request) {
   return json({...summary,status:data.enabled===true?"connected":"disabled",integrated:true,message:data.enabled===true?undefined:"Ative o HPX Sync nas configurações para começar."});
 }
 async function context(request: Request) {
-  const user = await getChatGPTUser();
+  const user = await getHpxUser(request);
   if (!user) return { response: json({ error: "Entre na sua conta para continuar." }, 401) };
   if (!isOwner(user, env.HPX_OWNER_EMAIL)) return { response: json({ error: "Acesso restrito ao proprietário." }, 403) };
   if (request.method !== "GET" && request.headers.get("origin") !== new URL(request.url).origin) return { response: json({ error: "Origem não permitida." }, 403) };

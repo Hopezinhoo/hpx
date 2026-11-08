@@ -3,6 +3,7 @@ declare namespace Cloudflare {
     DB?: D1Database;
     BUCKET?: R2Bucket;
     HPX_OWNER_EMAIL?: string;
+    HPX_ADMIN_PASSWORD?: string;
     HPX_INGEST_ENABLED?: string;
     HPX_INGEST_URL?: string;
     HPX_ADMIN_SECRET?: string;
